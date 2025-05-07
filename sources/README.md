@@ -11,3 +11,8 @@
 - [The Linguistics of DNA](Searls-LinguisticsDNA-1992.pdf)
 - [BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding](1810.04805v2.pdf)
 - [Promoter analysis and prediction in the human genome using sequence-based deep learning models](bty1068.pdf)
+
+
+### BERT-Promoter: An improved sequence-based predictor of DNA promoter using BERT pre-trained model and SHAP feature selection
+- [url](https://www.sciencedirect.com/science/article/pii/S1476927122001128)
+- [paper](1-s2.0-S1476927122001128-main.pdf)
