@@ -54,3 +54,12 @@ python run_finetune.py \
 
 bisogna partire dallo script originale "run_finetune.py" e pulirlo da tutte le cose non necessarie.
 Dovremmo provare a fare solamente finetuning partendo da un modello preaddrestrato.
+
+
+## Note installazione
+
+Python 3.8 sembra ok, di meno non riusciamo a fare.
+
+tokenizers da problemi durante l'instllazione (tokenizers viene installato quando si fa il setup.py `python3 -m pip install --editable .`) e quindi è necessario installare il Rust perchè funzioni...
+
+Invece per installare i requirements.txt in examples è necessario prima installare sentencepiece manualmente (e installerà la 0.2.0 per ora) e commentare la linea nel file requirements.txt riguardo sentencpiece, il resto dovrebbe installarsi senza problemi.
