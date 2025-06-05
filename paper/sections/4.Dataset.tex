@@ -1,0 +1,33 @@
+\section{Dataset}
+
+\subsection{The GUE Benchmark}
+
+As part of the DNABERT-2 project, the authors introduced a large benchmark called \textbf{GUE}, which stands for \textit{Genome Understanding Evaluation}. This benchmark was designed to better test how well language models can understand and work with real genomic data.
+
+GUE includes \textbf{28 classification tasks} based on DNA sequences from different species and experimental sources. These tasks cover a variety of biological signals, such as:
+\begin{itemize}
+\item Promoter regions,
+\item Transcription factor binding sites (TFBS),
+\item Enhancers,
+\item Splicing sites,
+\item And other regulatory elements.
+\end{itemize}
+
+Each task in GUE is treated as a binary classification problem: the model must decide whether a given DNA sequence contains the signal or not.
+
+\subsection{Why GUE matters}
+
+Before GUE, most models\textemdash including DNABERT\textemdash were tested on small, hand-picked datasets, often from a single species (usually human). This made it hard to compare models fairly or evaluate how well they generalize across tasks and species.
+
+GUE solves this by:
+\begin{itemize}
+\item Providing a \textbf{standardized evaluation} across many biological functions,
+\item Including \textbf{multi-species data} to test generalization,
+\item Covering both simple and challenging classification tasks.
+\end{itemize}
+
+The GUE benchmark was used in the DNABERT-2 paper to show that the new model performs better than previous models (like DNABERT, Enformer, and Nucleotide Transformer) in \textbf{23 out of 28 tasks}, while using fewer parameters and training resources.
+
+\subsection{Scope of our project}
+
+In this project, we focus \textbf{only on the promoter prediction task} one of the classification tasks included in the GUE benchmark. This choice aligns with the original DNABERT paper and allows us to study a well-defined problem with strong biological relevance. Other tasks from GUE are outside the scope of our work.

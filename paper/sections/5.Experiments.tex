@@ -1,0 +1,68 @@
+\section{Experiments}
+
+To evaluate the capabilities of DNABERT in the task of promoter prediction, we conducted a series of experiments using the original \textbf{6-mer pretrained model} released by the authors. We based our evaluation on the same datasets used in the DNABERT paper, consisting of promoter sequences from human DNA. These datasets were divided into three subsets:
+\begin{itemize}
+\item \textbf{all}: the full dataset, containing both TATA and no-TATA promoters,
+\item \textbf{notata}: a subset including only promoters without a TATA box,
+\item \textbf{tata}: a subset including only promoters containing a TATA box.
+\end{itemize}
+
+\subsection{Method}
+
+We fine-tuned the DNABERT model separately on each dataset. To account for the variability introduced by random initialization, each experiment was repeated with different random seeds. This allowed us to verify the robustness and reproducibility of the results.
+
+All training settings, including batch size and learning rate, were aligned with those reported in the original DNABERT paper. We used the official implementation as the base for all our experiments to ensure consistency with the reference results.
+
+\subsection{Results}
+
+Our results were evaluated using the \textbf{Matthews Correlation Coefficient (MCC)}, consistent with the original paper. A summary of the best results obtained in our experiments is presented in \autoref{tab:mcc_results}, along with the expected values reported by the DNABERT authors. The comparison includes absolute and relative errors between our scores and the reference scores.
+
+\begin{table*}[h!]
+\centering
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+Dataset & Our MCC & Expected MCC & Absolute Error & Relative Error (\%) \\
+\hline
+all & 90.65\% & 90.48\% & 0.17\% & 0.19\% \\
+notata & 92.80\% & 93.05\% & 0.25\% & 0.27\% \\
+tata & 62.05\% & 61.56\% & 0.49\% & 0.80\% \\
+\hline
+\end{tabular}
+\caption{Comparison between our MCC results and those reported in the original DNABERT paper.}
+\label{tab:mcc_results}
+\end{table*}
+
+As shown in \autoref{tab:mcc_results}, the MCC values we obtained are very close to the expected results from the original study. This confirms that the model can be successfully reproduced and that the official implementation is reliable. The small deviations observed are within acceptable margins and are likely due to the stochastic nature of training processes.
+
+\subsection{Run Details}
+
+To further support our findings, \autoref{tab:all_runs} reports the MCC scores for all individual runs, including the random seed used. These details reveal the extent of variability in the results and emphasize the importance of using multiple seeds when assessing model performance.
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+Dataset & Seed & MCC \\
+\hline
+all & 15 & 91.64\% \\
+all & 44 & 90.95\% \\
+all & 48 & 91.05\% \\
+all & 65 & 89.07\% \\
+all & 172 & 90.54\% \\
+notata & 31 & 93.03\% \\
+notata & 42 & 93.13\% \\
+notata & 77 & 92.24\% \\
+tata & 11 & 63.76\% \\
+tata & 53 & 61.89\% \\
+tata & 80 & 60.48\% \\
+\hline
+\end{tabular}
+\caption{MCC scores from all individual runs with their corresponding random seeds.}
+\label{tab:all_runs}
+\end{table}
+
+As visible in \autoref{tab:all_runs}, the \textit{tata} subset shows greater variability in MCC scores, likely due to its smaller size and the inherent difficulty of the classification task. Nevertheless, the overall results align closely with the published benchmarks.
+
+\subsection{Final Notes}
+
+Repeating the fine-tuning with different random seeds is crucial for obtaining robust and reproducible results. While this practice is often implied, its significance becomes evident when aiming for a fair comparison with published benchmarks. In our experiments, averaging the outcomes across multiple runs helped mitigate the impact of random fluctuations, resulting in scores that faithfully mirror those in the original DNABERT study.
