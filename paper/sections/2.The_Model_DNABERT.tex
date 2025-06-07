@@ -1,6 +1,6 @@
 \section{The Model DNABERT}
 
-DNABERT is a model that follows the same paradigms introduced by BERT, but adapted to the DNA sequences.
+DNABERT is a model that follows the same paradigms introduced by BERT, but adapted to the DNA sequences \cite{DBLP:journals/corr/abs-1810-04805}.
 BERT is a transformer-based contextualized language representation model that has achieved superhuman performance in many natural language processing (NLP) tasks. It introduces a paradigm of pre-training and fine-tuning, which first develops general-purpose understandings from massive amount of unlabeled data and then solves various applications with task-specific data with minimal architectural modification.
 
 
@@ -24,7 +24,14 @@ The input to DNABERT is thus a sequence of overlapping k-mers, converted to embe
     \item Segment embeddings (to distinguish sequence segments, although only one segment is typically used for DNA).
 \end{itemize}
 
-Internally, the model applies standard Transformer operations: multi-head self-attention, feed-forward layers, residual connections, and layer normalization—repeated across all 12 layers.
+Internally, the model applies standard Transformer operations: multi-head self-attention, feed-forward layers, residual connections, and layer normalization—repeated across all 12 layers, as shown in the \autoref{fig:dnabert-arch}.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=.6\linewidth]{imgs/model-arch.png}
+    \caption{The model architecture of DNABERT \cite{384017589}}
+    \label{fig:dnabert-arch}
+\end{figure}
 
 During pre-training, DNABERT uses a masked language modeling (MLM) objective, like BERT, but without next sentence prediction (NSP), which is not applicable in genomic contexts. Approximately 15–20\% of k-mers in each sequence are randomly masked in contiguous spans, and the model is trained to predict them based on surrounding context. This enables the model to learn the "syntax" and "semantics" of genomic sequences in a self-supervised fashion.
 

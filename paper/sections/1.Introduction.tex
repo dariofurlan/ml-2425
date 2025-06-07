@@ -1,22 +1,22 @@
 \section{Introduction}
 
-In recent years, researchers have started using language models\textemdash originally developed for natural language processing (NLP)\textemdash to study the genome. In this context, DNABERT is one of the first models that treats DNA as if it were a language, using a machine learning architecture called a Transformer. The idea is to represent DNA as a sequence of "words" made up of short nucleotide fragments called \textit{k-mers}.
+In recent years, researchers have started using language models, originally developed for natural language processing (NLP), to study the genome. In this context, DNABERT is one of the first models that treats DNA as if it were a language, using a machine learning architecture called a Transformer. The idea is to represent DNA as a sequence of "words" made up of short nucleotide fragments called \textit{k-mers}.
 
-This project explores DNABERT and its updated version, DNABERT-2, focusing on a specific biological task: \textbf{promoter prediction}. Promoters are short regions in DNA that play a key role in starting the process of gene expression. Understanding where promoters are and how they work is important for studying how genes are turned on and off.
+This project explores DNABERT \cite{10.1093/bioinformatics/btab083} and its updated version, DNABERT-2 \cite{zhou2024dnabert2efficientfoundationmodel}, focusing on a specific biological task: \textbf{promoter prediction}. Promoters are short regions in DNA that play a key role in starting the process of gene expression. Understanding where promoters are and how they work is important for studying how genes are turned on and off.
 
 We will focus on the following aspects:
-\begin{itemize}
+\begin{enumerate}
 \item How DNABERT works and what makes it different from traditional models.
 \item The main improvements introduced in DNABERT-2.
 \item The promoter prediction task and why it matters.
 \item A practical experiment to reproduce DNABERT's original promoter prediction results using Python.
-\end{itemize}
+\end{enumerate}
 
 By the end of this project, we aim to understand how Transformer-based models can be adapted for biology and what advantages they offer compared to earlier methods like convolutional or recurrent neural networks.
 
-\subsection{DNA as a Language}
+\subsection{DNA as a Language }
 
-DNA (deoxyribonucleic acid) is the molecule that contains the genetic instructions for how living organisms grow, function, and reproduce. It consists of two long strands twisted into a double helix. Each strand is made up of building blocks called \textit{nucleotides}. Each nucleotide includes:
+DNA (deoxyribonucleic acid) is the molecule that contains the genetic instructions for how living organisms grow, function, and reproduce. It consists of two long strands twisted into a double helix. Each strand is made up of building blocks called \textit{nucleotides} \cite{4c869e6d-8c66-3ab2-a976-761dca85164d}. Each nucleotide includes:
 \begin{itemize}
 \item A sugar molecule,
 \item A phosphate group,

@@ -3,24 +3,16 @@
 DNABERT-2 is the evolution of DNABERT, designed to overcome some technical limitations related to scalability, efficiency, and generalization across different species genomes. It was released in 2024 and introduces substantial changes in both the tokenization phase and the model architecture.
 
 \subsection{Key Differences from DNABERT}
+
 \begin{enumerate}
-\item \textbf{Token Representation}: 
-   \begin{itemize}
-   \item DNABERT-2 uses a more efficient tokenization method that allows for better handling of longer sequences and reduces the vocabulary size, making it more scalable to larger datasets.
-   \end{itemize}
-\item \textbf{Model Architecture}:
-   \begin{itemize}
-   \item The architecture has been optimized for better performance on genomic data, with modifications that enhance the attention mechanism and improve the model's ability to capture long-range dependencies in DNA sequences.
-   \end{itemize}
-\item \textbf{Training Efficiency}:
-   \begin{itemize}
-   \item DNABERT-2 incorporates techniques that allow for faster training times and reduced computational requirements, making it more accessible for researchers with limited resources.
-   \end{itemize}
+    \item \textbf{Token Representation}: DNABERT-2 uses a more efficient tokenization method that allows for better handling of longer sequences and reduces the vocabulary size, making it more scalable to larger datasets.
+    \item \textbf{Model Architecture}:The architecture has been optimized for better performance on genomic data, with modifications that enhance the attention mechanism and improve the model's ability to capture long-range dependencies in DNA sequences.
+    \item \textbf{Training Efficiency}:DNABERT-2 incorporates techniques that allow for faster training times and reduced computational requirements, making it more accessible for researchers with limited resources.
 \end{enumerate}
 
 \subsection{Tokenization with Byte Pair Encoding (BPE)}
 
-DNABERT-2 instead of using fixed-length k-mers, applies Byte Pair Encoding (BPE) to create a more flexible and efficient tokenization scheme. BPE builds tokens by merging the most frequent sequences in the training data, allowing for a more adaptive representation of DNA sequences. This approach significantly improves the model's ability to handle longer sequences and reduces the overall vocabulary size, making it more efficient for training and inference.
+DNABERT-2 instead of using fixed-length k-mers, applies Byte Pair Encoding (BPE) \cite{sennrich2016neuralmachinetranslationrare} to create a more flexible and efficient tokenization scheme. BPE builds tokens by merging the most frequent sequences in the training data, allowing for a more adaptive representation of DNA sequences. This approach significantly improves the model's ability to handle longer sequences and reduces the overall vocabulary size, making it more efficient for training and inference.
 
 \subsubsection{Problems of k-mer tokenization}
 Before diving into the advantages of BPE, it is essential to understand the limitations of k-mer tokenization, which DNABERT-2 addresses:

@@ -1,0 +1,49 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% v1.0.0
+% lab-report-template
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[twocolumn]{article}
+
+% Include packages and document structure
+\include{style}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%               HEADER
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{
+    \vspace{-1cm}
+    \includegraphics[height=2.5cm]{imgs/logo-unipd.pdf}
+    
+
+    \vspace{0.5cm}
+    \textbf{Promoter Prediction with DNABERT and DNABERT-2: \\ A Reproduction and Analysis}
+}
+\author{
+    Author: {Dario Furlan, Nicolò Raccichini} 
+}
+
+
+% Document begin
+\begin{document}
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                 BODY
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{chapters/1.Introduction}
+\input{chapters/2.The_Model_DNABERT}
+\input{chapters/3.The_Sequel_DNABERT-2}
+\input{chapters/4.The_task_of_promoter_prediction}
+\input{chapters/5.GUE_Dataset}
+\input{chapters/6.Experiments}
+\input{chapters/7.Conclusion}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%             BIBLIOGRAPHY
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bibliographystyle{apalike2}
+\bibliography{references}
+
+\end{document}
