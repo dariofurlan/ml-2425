@@ -1,52 +1,49 @@
 \section{Introduction}
 
-In recent years, researchers have started using language models, originally developed for natural language processing (NLP), to study the genome. In this context, DNABERT is one of the first models that treats DNA as if it were a language, using a machine learning architecture called a Transformer. The idea is to represent DNA as a sequence of "words" made up of short nucleotide fragments called \textit{k-mers}.
+In recent years, researchers have begun to apply techniques from natural language processing (NLP) to genomic data. The key idea is that DNA, much like human language, can be represented as a sequence of symbols that carries information. Among the models inspired by this idea, DNABERT \cite{10.1093/bioinformatics/btab083} stands out as one of the first to treat DNA as a “language”, using the Transformer architecture originally designed for textual data. In this approach, DNA sequences are broken into overlapping fragments of fixed length called \textit{k-mers}, which serve as the basic units or “words” for the model.
 
-This project explores DNABERT \cite{10.1093/bioinformatics/btab083} and its updated version, DNABERT-2 \cite{zhou2024dnabert2efficientfoundationmodel}, focusing on a specific biological task: \textbf{promoter prediction}. Promoters are short regions in DNA that play a key role in starting the process of gene expression. Understanding where promoters are and how they work is important for studying how genes are turned on and off.
+This analogy between language and DNA opens new possibilities for understanding complex biological mechanisms. One important application is \textbf{promoter prediction}, the task of identifying regions in the DNA that initiate gene transcription. Promoters act as on/off switches for genes, and knowing where they are helps us understand how genes are regulated. This project focuses on evaluating the performance of DNABERT and its improved version, DNABERT-2 \cite{zhou2024dnabert2efficientfoundationmodel}, in this specific task.
 
-We will focus on the following aspects:
+To guide our exploration, we will address the following key points, each building upon the previous:
 \begin{enumerate}
-\item How DNABERT works and what makes it different from traditional models.
-\item The main improvements introduced in DNABERT-2.
-\item The promoter prediction task and why it matters.
-\item A practical experiment to reproduce DNABERT's original promoter prediction results using Python.
+    \item First, we explain how DNABERT is designed and why it outperforms older models.
+    \item Next, we examine the main innovations introduced in DNABERT-2.
+    \item Then, we introduce the biological concept of promoters and discuss their relevance to gene regulation.
+    \item Finally, we replicate DNABERT's promoter prediction experiment using Python, applying theory to practice.
 \end{enumerate}
 
-By the end of this project, we aim to understand how Transformer-based models can be adapted for biology and what advantages they offer compared to earlier methods like convolutional or recurrent neural networks.
+Through this structure, we aim to develop a clearer understanding of how Transformer-based models are adapted for genomic data and why they offer advantages over traditional machine learning techniques. To support this analysis, we first provide background on DNA, genes, and transcription, gradually introducing the biological concepts that motivate the use of these models.
 
-\subsection{DNA as a Language }
+\subsection{DNA as a Language}
 
-DNA (deoxyribonucleic acid) is the molecule that contains the genetic instructions for how living organisms grow, function, and reproduce. It consists of two long strands twisted into a double helix. Each strand is made up of building blocks called \textit{nucleotides} \cite{4c869e6d-8c66-3ab2-a976-761dca85164d}. Each nucleotide includes:
-\begin{itemize}
-\item A sugar molecule,
-\item A phosphate group,
-\item And one of four \textit{bases}: adenine (A), thymine (T), cytosine (C), or guanine (G).
-\end{itemize}
+To understand why DNA can be treated as a language, we must look at its basic structure. DNA (deoxyribonucleic acid) is the molecule that stores the genetic instructions for all living organisms. It consists of two strands twisted into a double helix, where each strand is made up of smaller units called \textit{nucleotides} \cite{4c869e6d-8c66-3ab2-a976-761dca85164d}.
 
-These bases are the alphabet of DNA. They pair up across the two strands (A with T, C with G) to form \textit{base pairs}. The order of these bases carries the information cells use to build and maintain the body\textemdash just like letters form words and sentences in a language.
+Each nucleotide includes a sugar, a phosphate group, and one of four bases: adenine (A), thymine (T), cytosine (C), or guanine (G). These bases form pairs—A with T, C with G—creating the rungs of the DNA ladder. The sequence of these bases determines the genetic code. Much like letters form words and sentences, the order of bases carries instructions used by cells to build proteins and control biological functions.
+
+This structural regularity and symbolic representation make it possible to apply language-based models to DNA, treating sequences of bases as sentences and short fragments (\textit{k-mers}) as words.
 
 \subsection{Genes and Transcription}
 
-A \textit{gene} is a segment of DNA that contains the instructions to make a specific protein or RNA molecule. Genes are responsible for most traits and functions in an organism.
+Within the long strands of DNA, specific segments known as \textit{genes} contain the instructions for making proteins or functional RNA molecules. The first step in using this genetic information is \textbf{transcription}, a process in which a gene is copied into a molecule called \textit{messenger RNA} (mRNA).
 
-The process of using a gene's instructions begins with \textbf{transcription}. During transcription, the DNA is copied into a molecule called \textit{messenger RNA} (mRNA). This happens when an enzyme called \textit{RNA polymerase} binds to a region at the beginning of the gene. This region is called a \textbf{promoter}.
+Transcription begins when an enzyme called \textit{RNA polymerase} binds to a particular region of the DNA known as a \textbf{promoter}. This region lies just before the gene and signals the start of transcription. Once mRNA is produced, it leaves the cell nucleus and is used in the next step, called \textbf{translation}, where ribosomes read the mRNA to assemble the corresponding protein. The order of bases in the mRNA determines the sequence of amino acids in the final protein.
 
-After transcription, the mRNA leaves the cell nucleus and is used in \textbf{translation}, where it is read by ribosomes to build a protein. The sequence of bases in the mRNA determines the sequence of amino acids in the protein, which shapes its function.
+Thus, promoters are essential components of the transcription process, acting as the control points where gene expression begins.
 
 \subsection{Promoters}
 
-A \textit{promoter} is a short region of DNA located just before (upstream of) a gene. It acts like a starting signal for transcription. Promoters contain specific sequences that are recognized by RNA polymerase and other helper proteins called transcription factors. These sequences tell the machinery where to start copying the DNA into RNA.
+Promoters are short DNA sequences located upstream of genes. They serve as binding sites for RNA polymerase and other proteins that initiate transcription. Without a promoter, the transcription machinery would not know where to start copying the DNA.
 
-Some promoters include a well-known sequence called the \textbf{TATA box}, which is usually found about 25 to 35 \textit{base pairs} (i.e., steps along the DNA chain) before the gene's starting point. This box helps RNA polymerase find the right spot to begin transcription. However, not all promoters contain a TATA box. These are called \textit{no-TATA promoters} and rely on other mechanisms to start transcription.
+Some promoters contain a conserved sequence called the \textit{TATA box}, typically found 25 to 35 base pairs before the start of a gene. This element helps position the transcription machinery at the right spot. However, not all promoters include a TATA box. These are called \textit{no-TATA promoters}, and they rely on alternative sequences and factors to guide transcription initiation.
+
+Understanding the structure and variability of promoters is crucial for predicting their presence in a sequence—a task where machine learning models like DNABERT can provide valuable support.
 
 \subsection{Why Traditional Models Fall Short}
 
-Before DNABERT, most computational models used to analyze DNA sequences were based on \textbf{Convolutional Neural Networks (CNNs)} or \textbf{Recurrent Neural Networks (RNNs)}. These approaches made significant progress but also had clear limitations in this context.
+Before the introduction of Transformer-based models, researchers mainly used \textit{Convolutional Neural Networks (CNNs)} and \textit{Recurrent Neural Networks (RNNs)} to analyze DNA sequences. These models brought useful insights but faced several limitations when applied to genomic tasks like promoter prediction.
 
-CNNs are good at finding local patterns using sliding filters, but they only look at short windows of the sequence at a time. As a result, they often miss long-range relationships between distant parts of DNA\textemdash which are important in tasks like promoter recognition.
+CNNs are effective at detecting local patterns within a fixed-size window, but they struggle to capture long-range dependencies—important in DNA, where regulatory elements may be far apart. RNNs, particularly advanced forms like LSTMs and GRUs, process sequences step-by-step and can, in theory, handle longer contexts. However, they often suffer from the \textbf{vanishing gradient problem}, which causes earlier information in the sequence to fade and become inaccessible to the model as it progresses.
 
-RNNs, including more advanced versions like LSTMs and GRUs, can handle longer sequences by processing them step-by-step. However, they struggle with long DNA sequences because earlier information fades away as the sequence progresses. This is known as the \textbf{vanishing gradient problem}. RNNs also compress all past information into a single internal state, which becomes a bottleneck for learning complex patterns.
+Both CNNs and RNNs also compress the sequence into a fixed-size internal state, limiting their ability to capture complex dependencies. Moreover, they usually require large, well-labeled datasets for training, which are scarce and expensive in the biological domain.
 
-In addition, both CNNs and RNNs usually need large amounts of labeled data to perform well. But in biology, high-quality labeled datasets are often limited and expensive to produce.
-
-These challenges make it hard for traditional models to generalize well\textemdash especially when working with real-world genomic data. DNABERT addresses these problems by using self-attention, which allows it to consider the entire sequence at once and learn patterns across any distance.
+Transformer-based models like DNABERT overcome these limitations through \textit{self-attention}, a mechanism that allows the model to focus on all parts of the sequence simultaneously. This makes them especially suitable for tasks where patterns can span long distances—such as identifying promoters in genomic sequences.

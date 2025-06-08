@@ -1,8 +1,8 @@
-\section{Dataset}
+\section{The GUE Benchmark}
 
-\subsection{The GUE Benchmark}
+% \subsection{The GUE Benchmark}
 
-As part of the DNABERT-2 project, the authors introduced a large benchmark called \textbf{GUE}, which stands for \textit{Genome Understanding Evaluation}. This benchmark was designed to better test how well language models can understand and work with real genomic data.
+As part of the DNABERT-2 project, the authors introduced a large benchmark called \textit{Genome Understanding Evaluation (GUE)}. This benchmark was designed to better test how well language models can understand and work with real genomic data.
 
 GUE includes \textbf{28 classification tasks} based on DNA sequences from different species and experimental sources. These tasks cover a variety of biological signals, such as:
 \begin{itemize}
@@ -31,3 +31,10 @@ The GUE benchmark was used in the DNABERT-2 paper to show that the new model per
 \subsection{Scope of our project}
 
 In this project, we focus \textbf{only on the promoter prediction task} one of the classification tasks included in the GUE benchmark. This choice aligns with the original DNABERT paper and allows us to study a well-defined problem with strong biological relevance. Other tasks from GUE are outside the scope of our work.
+
+The specific datasets used in this project are:
+\begin{itemize}
+    \item \texttt{prom\_300\_all}: Contains human promoter sequences, with and without TATA boxes.
+    \item \texttt{prom\_300\_notata}: Contains human promoter sequences without TATA boxes.
+    \item \texttt{prom\_300\_tata}: Contains human promoter sequences with TATA boxes.
+\end{itemize}
