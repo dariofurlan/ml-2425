@@ -1,0 +1,51 @@
+\section{The Sequel DNABERT-2}
+
+DNABERT-2 is the evolution of DNABERT, designed to overcome some technical limitations related to scalability, efficiency, and generalization across different species genomes. It was released in 2024 and introduces substantial changes in both the tokenization phase and the model architecture.
+
+\subsection{Key Differences from DNABERT}
+
+\begin{enumerate}
+    \item \textbf{Token Representation}: DNABERT-2 uses a more efficient tokenization method that allows for better handling of longer sequences and reduces the vocabulary size, making it more scalable to larger datasets.
+    \item \textbf{Model Architecture}:The architecture has been optimized for better performance on genomic data, with modifications that enhance the attention mechanism and improve the model's ability to capture long-range dependencies in DNA sequences.
+    \item \textbf{Training Efficiency}:DNABERT-2 incorporates techniques that allow for faster training times and reduced computational requirements, making it more accessible for researchers with limited resources.
+\end{enumerate}
+
+\subsection{Tokenization with Byte Pair Encoding (BPE)}
+
+DNABERT-2 instead of using fixed-length k-mers, applies Byte Pair Encoding (BPE) \cite{sennrich2016neuralmachinetranslationrare} to create a more flexible and efficient tokenization scheme. BPE builds tokens by merging the most frequent sequences in the training data, allowing for a more adaptive representation of DNA sequences. This approach significantly improves the model's ability to handle longer sequences and reduces the overall vocabulary size, making it more efficient for training and inference.
+
+\subsubsection{Problems of k-mer tokenization}
+Before diving into the advantages of BPE, it is essential to understand the limitations of k-mer tokenization, which DNABERT-2 addresses:
+\begin{itemize}
+\item \textbf{Fixed Length, Rigid Vocabulary}: k-mers have a fixed length, which can lead to inefficiencies when dealing with sequences of varying lengths. The fixed vocabulary size (e.g., $4^k$ for $k=6$) limits the model's ability to adapt to DNA patterns of varying length and importance.
+\item \textbf{Information Leakage (in overlapping k-mers)}: When using overlapping k-mers (stride 1), adjacent tokens share many characters. This causes leakage during pretraining:
+\begin{itemize}
+\item If a k-mer is masked, its content can be almost fully recovered from nearby k-mers.
+\item This reduces the difficulty of the masked language modeling task and harms learning, because the model can "cheat".
+\item Example: Given a DNA string \texttt{ATTGCACT}, 3-mers are \texttt{ATT}, \texttt{TTG}, \texttt{TGC}, \texttt{GCA}, \texttt{CAC}, \texttt{ACT}. Masking \texttt{TGC} is not hard for the model if it sees \texttt{TTG} and \texttt{GCA}, which already contain most of its content.
+\end{itemize}
+\item \textbf{Redundant and Long Sequences}: Overlapping k-mers produce a lot of tokens:
+\begin{itemize}
+\item A sequence of length $L$ results in $L-k+1$ tokens.
+\item Many tokens carry almost the same information (shifted by one nucleotide).
+\item This creates computational inefficiency, especially in Transformer models, which have quadratic cost in sequence length.
+\end{itemize}
+\item \textbf{Poor Generalization (in non-overlapping k-mers)}: To reduce redundancy, some models use non-overlapping k-mers (stride = k). However, this introduces another issue: small changes in input lead to big changes in tokens.
+\begin{itemize}
+\item Example: Sequence 1: \texttt{ACAATAATAATAATAACGG} $\rightarrow$ k-mers: \texttt{ACA}, \texttt{ATA}, \texttt{ATA}, \dots
+Sequence 2 (shifted): \texttt{CAATAATAATAATAACGG} $\rightarrow$ k-mers: \texttt{CAA}, \texttt{TAA}, \texttt{TAA}, \dots
+Even though the sequences are nearly identical, their tokenized forms are very different, making the model's job harder.
+\end{itemize}
+\item \textbf{Vocabulary Size}: The vocabulary size grows exponentially with the length of k, leading to scalability issues for larger datasets.
+\item \textbf{Contextual Limitations}: k-mers do not capture the contextual relationships between nucleotides effectively, which can limit the model's understanding of complex genomic structures.
+\item \textbf{No Adaptability Across Genomes}: K-mer vocabularies are fixed, so models trained with them may not generalize well across species with different sequence distributions. This reduces performance in multi-species settings.
+\end{itemize}
+
+\subsubsection{Advantages of Byte Pair Encoding (BPE)}
+By replacing k-mer tokenization with Byte Pair Encoding (BPE), DNABERT-2 addresses these issues effectively:
+\begin{itemize}
+\item \textbf{Variable Length Tokens}: BPE allows for variable-length tokens, which can better capture the nuances of DNA sequences.
+\item \textbf{Reduced Vocabulary Size}: By merging frequent sequences, BPE reduces the overall vocabulary size, making the model more efficient.
+\item \textbf{Improved Contextual Awareness}: BPE can capture contextual relationships more effectively, leading to better performance on downstream tasks.
+\item \textbf{Enhanced Sequence Understanding}: During training, the model has to learn both the length of the token and the token itself, which further improves the model's understanding of the sequence.
+\end{itemize}

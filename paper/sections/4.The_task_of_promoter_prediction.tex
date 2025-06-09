@@ -1,0 +1,57 @@
+\section{The Task of Promoter Prediction}
+
+One of the key tasks explored in the DNABERT project is \textbf{promoter prediction}: that is, identifying whether a given DNA sequence contains a promoter region. This is a fundamental step in understanding how genes are regulated \cite{10.1093/bioinformatics/bty1068}.
+
+\subsection{Why promoter prediction matters}
+
+As explained earlier, promoters are short regions of DNA that signal the start of a gene. They are not genes themselves, but they play a crucial role in deciding \textbf{when}, \textbf{where}, and \textbf{how much} a gene is expressed. Misregulation of promoters is often linked to diseases, including cancer, because incorrect gene activation can lead to malfunctioning cells.
+
+Automatically detecting promoters in DNA sequences is important for:
+\begin{itemize}
+\item Mapping the regulatory landscape of the genome,
+\item Understanding gene expression in different cell types,
+\item Supporting medical research and diagnostics.
+\end{itemize}
+
+However, recognizing promoters is not easy. Promoters do not follow a simple fixed pattern. While some contain recognizable elements like the TATA box, others rely on more complex or subtle sequence signals.
+
+\subsection{How DNABERT tackles the problem}
+
+DNABERT is trained to recognize promoters by learning from examples. During fine-tuning, it is given sequences labeled as either \textit{containing a promoter} (positive) or \textit{not containing a promoter} (negative). The model then learns to classify new sequences based on the patterns it has seen.
+
+Two main evaluation settings are used:
+
+\subsubsection{DNABERT-Prom-300}
+This setting focuses on \textbf{proximal promoter regions}: short segments of DNA around the \textit{transcription start site} (TSS), typically from -249 to +50 base pairs relative to the TSS. These regions are critical for transcription to begin.  
+In this setup:
+\begin{itemize}
+\item Positive examples are real promoter sequences.
+\item Negative examples are sequences from elsewhere in the genome with similar composition but no promoter activity.
+\item The model learns to classify 300 base pair sequences.
+\end{itemize}
+
+This setup is well-suited for measuring the model's ability to distinguish true promoter regions from random DNA fragments.
+
+\subsubsection{DNABERT-Prom-scan}
+This is a more realistic and challenging scenario. Here, the model receives \textbf{longer DNA sequences} (up to 10,000 base pairs) and must scan them to detect the location of any promoters.  
+This task is more difficult because:
+\begin{itemize}
+\item Promoters are rare in long sequences.
+\item The model must avoid false positives while still detecting real promoters.
+\end{itemize}
+
+To support this, DNABERT-XL is used: a variant of the model that can process longer input sequences, thanks to architectural adjustments.
+
+\subsection{Types of promoters}
+
+In the original experiments, the promoters were grouped into two categories:
+\begin{itemize}
+\item \textbf{TATA promoters}: contain a TATA box, a common and easily recognizable pattern.
+\item \textbf{No-TATA promoters}: lack the TATA box and are more difficult to identify.
+\end{itemize}
+
+This separation helps evaluate how well the model generalizes across different promoter types.
+
+\subsection{Results summary (from DNABERT paper)}
+
+DNABERT significantly outperformed previous models (like CNNs and hybrid CNN-RNNs) in both promoter prediction tasks. It showed both higher accuracy and better precision and recall.
